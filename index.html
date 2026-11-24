@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Թագավորական Վիրտուալ Պատկերասրահ | Միջնադարյան Սիրո Պոեզիա</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:wght@400;600;700&family=Noto+Sans+Armenian:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --royal-red: #581c1c;
+            --deep-crimson: #7f1d1d;
+            --bright-crimson: #991b1b;
+            --gold: #d4af37;
+            --gold-light: #fef08a;
+            --gold-accent: #f59e0b;
+            --bg-dark: #180505;
+            --card-bg: #260a0a;
+            --text-light: #fef2f2;
+            --text-muted: #d1d5db;
+            --parchment: #fffbeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at top center, var(--deep-crimson) 0%, var(--bg-dark) 75%);
+            color: var(--text-light);
+            font-family: 'Noto Sans Armenian', sans-serif;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Noto Serif Armenian', serif;
+        }
+
+        /* Header / Royal Entrance */
+        header {
+            text-align: center;
+            padding: 5rem 1.5rem 4rem;
+            border-bottom: 2px solid var(--gold);
+            background: linear-gradient(180deg, rgba(88, 28, 28, 0.95) 0%, rgba(24, 5, 5, 0.8) 100%);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .royal-badge {
+            display: inline-block;
+            border: 2px solid var(--gold);
+            color: var(--gold-light);
+            background: rgba(212, 175, 55, 0.1);
+            padding: 0.4rem 1.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: var(--gold-light);
+            text-shadow: 0 3px 15px rgba(212, 175, 55, 0.5);
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 1.15rem;
+        }
+
+        /* Navigation & Filters */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 3rem auto;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        .filter-btn {
+            background: rgba(38, 10, 10, 0.9);
+            border: 2px solid var(--gold);
+            color: var(--gold-light);
+            padding: 0.7rem 1.8rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Noto Sans Armenian', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* Gallery Container with Alternating (Zig-Zag) Layout */
+        .gallery-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem 5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .exhibit-card {
+            background: var(--card-bg);
+            border: 3px solid var(--gold);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        /* Alternating layout: even cards have different feel */
+        .exhibit-card:nth-child(even) {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #260a0a 0%, #3a0d0d 100%);
+        }
+
+        .exhibit-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
+        }
+
+        .card-content h3 {
+            font-size: 2rem;
+            color: var(--gold-light);
+            margin-bottom: 0.4rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .era-tag {
+            font-size: 0.85rem;
+            color: #fca5a5;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+            display: block;
+            font-weight: 600;
+        }
+
+        .masterpiece {
+            color: var(--gold-accent);
+            font-style: italic;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .excerpt-box {
+            background: rgba(15, 5, 5, 0.7);
+            border-left: 4px solid var(--gold);
+            padding: 1.2rem;
+            margin: 1rem 0 1.5rem;
+            font-style: italic;
+            color: #fde047;
+            font-size: 1.05rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .view-btn {
+            background: var(--gold);
+            border: none;
+            color: var(--bg-dark);
+            padding: 0.9rem 1.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: 'Noto Sans Armenian', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            white-space: nowrap;
+        }
+
+        .view-btn:hover {
+            background: var(--gold-light);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.7);
+        }
+
+        /* Modal (Detailed Royal Popup) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 2, 2, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--parchment);
+            color: #1f1209;
+            max-width: 750px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 3rem;
+            position: relative;
+            border: 5px solid var(--gold);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.2rem; right: 1.8rem;
+            font-size: 2.2rem;
+            background: none;
+            border: none;
+            color: #7f1d1d;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .close-modal:hover { color: #dc2626; }
+
+        .modal-era {
+            color: #b91c1c;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .modal-content h2 {
+            font-size: 2.3rem;
+            color: #260a0a;
+            margin: 0.4rem 0;
+        }
+
+        .modal-work {
+            font-size: 1.2rem;
+            color: #92400e;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .modal-poem {
+            background: #fef3c7;
+            border-left: 5px solid #b91c1c;
+            padding: 1.5rem;
+            margin: 1.8rem 0;
+            font-family: 'Noto Serif Armenian', serif;
+            font-size: 1.15rem;
+            color: #1f1209;
+            white-space: pre-line;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .modal-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            padding-top: 1.2rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .m-nav-btn {
+            background: var(--royal-red);
+            color: var(--gold-light);
+            border: 2px solid var(--gold);
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .m-nav-btn:hover { background: var(--bright-crimson); color: white; }
+
+        /* Quiz Container */
+        .quiz-container {
+            max-width: 850px;
+            margin: 3rem auto 6rem;
+            background: var(--card-bg);
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .quiz-container h2 {
+            color: var(--gold-light);
+            margin-bottom: 0.8rem;
+            font-size: 2.2rem;
+        }
+
+        .quiz-question {
+            font-size: 1.25rem;
+            margin: 1.8rem 0;
+            color: var(--text-light);
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .exhibit-card { grid-template-columns: 1fr; }
+            .quiz-options { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.2rem; }
+        }
+
+        .q-btn {
+            background: rgba(15, 5, 5, 0.9);
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            color: var(--text-light);
+            padding: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .q-btn:hover { border-color: var(--gold); background: rgba(212, 175, 55, 0.15); transform: translateY(-2px); }
+        .q-btn.correct { background: #065f46; border-color: #34d399; color: white; }
+        .q-btn.wrong { background: #991b1b; border-color: #f87171; color: white; }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 2px solid rgba(212, 175, 55, 0.3);
+            color: var(--text-muted);
+            font-size: 1rem;
+            background: rgba(15, 5, 5, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="royal-badge">Թագավորական Ցուցասրահ</span>
+        <h1>Միջնադարյան Սիրո Պոեզիա</h1>
+        <p>Շքեղ ու խորհրդավոր ճամփորդություն դեպի միջնադարյան Եվրոպայի և Հայաստանի մեծագույն բանաստեղծների սիրո աշխարհ</p>
+    </header>
+
+    <div class="controls">
+        <button class="filter-btn active" onclick="filterItems('all', this)">👑 Բոլոր գլուխգործոցները (6)</button>
+        <button class="filter-btn" onclick="filterItems('europe', this)">🇪🇺 Եվրոպական պոեզիա</button>
+        <button class="filter-btn" onclick="filterItems('armenia', this)">🇦🇲 Հայկական պոեզիա</button>
+    </div>
+
+    <main class="gallery-container" id="gallery"></main>
+
+    <section class="quiz-container">
+        <h2>✨ Արքայական Վիկտորինա</h2>
+        <p style="color: var(--text-muted); font-size: 1.05rem;">Ստուգիր քո գիտելիքները միջնադարյան գրականության մասին</p>
+        <div id="quiz-box"></div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <span class="modal-era" id="m-era"></span>
+            <h2 id="m-name"></h2>
+            <span class="modal-work" id="m-work"></span>
+            <p id="m-desc" style="line-height: 1.9; font-size: 1.1rem; color: #372213;"></p>
+            <div class="modal-poem" id="m-poem"></div>
+            <div class="modal-nav">
+                <button class="m-nav-btn" onclick="changeSlide(-1)">← Նախորդը</button>
+                <button class="m-nav-btn" onclick="changeSlide(1)">Հաջորդը →</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Թագավորական Վիրտուալ Պատկերասրահ • Միջնադարյան Սիրո Պոեզիա
+    </footer>
+
+    <script>
+        const exhibits = [
+            {
+                id: 0,
+                region: 'europe',
+                era: '13-14-րդ դդ. • Իտալիա',
+                name: 'Դանթե Ալիգիերի',
+                work: '«Նոր կյանք» (La Vita Nuova)',
+                shortQuote: '«Սերը մի զորություն է, որ մարդուն բարձրացնում է դեպի երկնային կատարելություն...»',
+                desc: 'Դանթեի ստեղծագործություններում սերը ներկայացվում է որպես հոգևոր կատարելության տանող վսեմ ուժ։ Նրա սերը Բեատրիչեի հանդեպ դուրս է գալիս սովորական երկրային զգացմունքի սահմաններից՝ դառնալով աստվածային լույսի և մաքրության խորհրդանիշ։',
+                poem: '«Այնքան ազնիվ ու պարկեշտ է երևում իմ տիրուհին,\nԵրբ ողջունում է մարդկանց,\nՈր ամեն լեզու պապանձվում է դողալով,\nԵվ աչքերը չեն համարձակվում նայել նրան...»'
+            },
+            {
+                id: 1,
+                region: 'europe',
+                era: '14-րդ դար • Իտալիա',
+                name: 'Ֆրանչեսկո Պետրարկա',
+                work: '«Կանցոնիերե» (Երգերի գիրք)',
+                shortQuote: '«Օրհնյալ լինի այն օրը, ամիսն ու տարին, երբ ես առաջին անգամ տեսա նրան...»',
+                desc: 'Պետրարկան իր անմահ սոնետներում գովերգում է Լաուրային՝ արտահայտելով խորը սեր, կարոտ և մարդկային հոգեկան ապրումներ։ Նա առաջիններից էր, ով սիրելի կնոջը պատկերեց ոչ թե որպես անմարմին հրեշտակ, այլ որպես իրական, գեղեցիկ ու երկրային էակ։',
+                poem: '«Խաղաղություն չեմ գտնում, բայց պատերազմելու ուժ էլ չունեմ.\nՎախենում եմ ու հուսով եմ լցվում, այրվում եմ ու սառույց դառնում,\nԹռչում եմ երկնքից վեր և ընկնում գետնին...»'
+            },
+            {
+                id: 2,
+                region: 'armenia',
+                era: '10-րդ դար • Հայաստան',
+                name: 'Գրիգոր Նարեկացի',
+                work: '«Մատյան ողբերգության»',
+                shortQuote: '«Աստվածային սիրո և մարդկային հոգու անսահման կարոտի աղոթք...»',
+                desc: 'Նարեկացու ստեղծագործություններում մեծ տեղ ունեն հոգևոր սերը, մարդկային խորագույն զգացմունքներն ու աստվածային սիրո գաղափարը։ Նրա տաղերում բնության գեղեցկությունն ու սիրո զգացմունքը միաձուլվում են լույսի և ներդաշնակության մեջ։',
+                poem: '«Աչքն ծով ի ծով ծիծաղախիտ ծաւալանայր յառաւօտուն,\nԵրկու փայլակնաձեւ արեգական նման...\nՇողն ի շողակն իջեալ ի գեղեցիկ դեմս նորա...»'
+            },
+            {
+                id: 3,
+                region: 'armenia',
+                era: '12-րդ դար • Կիլիկիա',
+                name: 'Ներսես Շնորհալի',
+                work: '«Շարականներ և Տաղեր»',
+                shortQuote: '«Լույսի, բարության և հոգևոր սիրո անմար ջահակիրը...»',
+                desc: 'Շնորհալու պոեզիայում արտահայտվում են վեհ հոգևոր զգացմունքները, սերն ու մարդկային բարությունը։ Նա սերը դիտարկում էր որպես մարդկանց միավորող, խաղաղություն և ներդաշնակություն պարգևող գերագույն արժեք։',
+                poem: '«Առաւօտ լուսոյ, արեգակն արդար,\nԱռ իս լոյս ծագեա...\nԲխումն ի Հօրէ, բխեա ի հոգւոյս բան քեզ ի հաճոյս...»'
+            },
+            {
+                id: 4,
+                region: 'armenia',
+                era: '16-րդ դար • Հայաստան',
+                name: 'Նահապետ Քուչակ',
+                work: '«Սիրո հայրեններ»',
+                shortQuote: '«Եբ սերն ի աշխարհս եկավ, եկավ իմ սիրտս բնակեցավ...»',
+                desc: 'Նրա անվան հետ կապվող հայրեններում վառ կերպով արտահայտվում են մարդկային երկրային սերը, կարոտը, գեղեցկության պաշտամունքն ու սիրային կրքոտ ապրումները՝ զերծ միջնադարյան կրոնական կաշկանդումներից։',
+                poem: '«Ես աչք ու դու լոյս, հոգի, առանց լոյս՝ աչքըն խաւարի.\nԵս ձուկ ու դու ջուր, հոգի, առանց ջուր՝ ձուկըն մեռանի.\nԵրբ զձուկն ի ջըրէն հանեն ւ’ի այլ ջուր ձըգեն, նայ ապրի,\nԵրբ զիս ի քենէ զատեն, քան զմեռնելն այլ ճար չի լինի։»'
+            },
+            {
+                id: 5,
+                region: 'armenia',
+                era: '18-րդ դար • Անդրկովկաս',
+                name: 'Սայաթ-Նովա',
+                work: '«Աշուղական խաղեր»',
+                shortQuote: '«Ամեն մարդ չի կարա խմի՝ իմ ջուրն ուրիշ ջրեն է...»',
+                desc: 'Հայ աշուղական պոեզիայի գագաթը։ Սայաթ-Նովայի համար սերը տառապանք է, բայց միաժամանակ՝ մարդուն ազնվացնող, անձնազոհության մղող և կյանքին իմաստ տվող ամենաբարձր ուժը։',
+                poem: '«Աշխարհըս մե փանջարա է, թաղերըն՝ բաղ ու բաղչա,\nՈվ կու պըտըտի, կու տեսնե, բեզարիլըս վա՞խտ է հիմա...\nԱմեն մարդ չի կանա կարդա՝ իմ գիրն ուրիշ գրեն է։»'
+            }
+        ];
+
+        let currentSlide = 0;
+
+        function renderGallery(filter = 'all') {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+
+            const filtered = filter === 'all' ? exhibits : exhibits.filter(item => item.region === filter);
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'exhibit-card';
+                card.innerHTML = `
+                    <div class="card-content">
+                        <span class="era-tag">${item.era}</span>
+                        <h3>${item.name}</h3>
+                        <span class="masterpiece">${item.work}</span>
+                        <div class="excerpt-box">${item.shortQuote}</div>
+                    </div>
+                    <button class="view-btn" onclick="openModal(${item.id})">👑 Ուսումնասիրել</button>
+                `;
+                gallery.appendChild(card);
+            });
+        }
+
+        function filterItems(region, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderGallery(region);
+        }
+
+        function openModal(id) {
+            currentSlide = id;
+            updateModal();
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function updateModal() {
+            const item = exhibits[currentSlide];
+            document.getElementById('m-era').innerText = item.era;
+            document.getElementById('m-name').innerText = item.name;
+            document.getElementById('m-work').innerText = item.work;
+            document.getElementById('m-desc').innerText = item.desc;
+            document.getElementById('m-poem').innerText = item.poem;
+        }
+
+        function changeSlide(dir) {
+            currentSlide = (currentSlide + dir + exhibits.length) % exhibits.length;
+            updateModal();
+        }
+
+        // Quiz Logic
+        const questions = [
+            {
+                q: "Ո՞ր բանաստեղծն է իր սոնետներում անմահացրել Լաուրայի կերպարը:",
+                options: ["Դանթե Ալիգիերի", "Ֆրանչեսկո Պետրարկա", "Նահապետ Քուչակ", "Սայաթ-Նովա"],
+                answer: 1
+            },
+            {
+                q: "Ո՞ր ստեղծագործությունն է գրել Դանթե Ալիգիերին սիրո մասին:",
+                options: ["«Կանցոնիերե»", "«Մատյան ողբերգության»", "«Նոր կյանք»", "«Հայրեններ»"],
+                answer: 2
+            },
+            {
+                q: "Ո՞ւմ անվան հետ են կապվում հայ միջնադարյան սիրո հայրենները:",
+                options: ["Ներսես Շնորհալի", "Գրիգոր Նարեկացի", "Նահապետ Քուչակ", "Սայաթ-Նովա"],
+                answer: 2
+            }
+        ];
+
+        let currentQ = 0;
+
+        function loadQuiz() {
+            const box = document.getElementById('quiz-box');
+            if (currentQ >= questions.length) {
+                box.innerHTML = `
+                    <p style="color: var(--gold-light); font-size: 1.3rem; margin: 1.5rem 0;">🎉 Հիանալի է, դուք փայլուն կերպով անցաք արքայական վիկտորինան:</p>
+                    <button class="filter-btn active" onclick="restartQuiz()">🔄 Կրկին փորձել</button>
+                `;
+                return;
+            }
+
+            const qData = questions[currentQ];
+            let optsHtml = qData.options.map((opt, idx) => 
+                `<button class="q-btn" onclick="checkQuiz(${idx}, this)">${opt}</button>`
+            ).join('');
+
+            box.innerHTML = `
+                <div class="quiz-question">Հարց ${currentQ + 1}/${questions.length}: <strong>${qData.q}</strong></div>
+                <div class="quiz-options">${optsHtml}</div>
+            `;
+        }
+
+        function checkQuiz(selected, btn) {
+            const buttons = document.querySelectorAll('.q-btn');
+            buttons.forEach(b => b.disabled = true);
+            
+            if (selected === questions[currentQ].answer) {
+                btn.classList.add('correct');
+            } else {
+                btn.classList.add('wrong');
+                buttons[questions[currentQ].answer].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                loadQuiz();
+            }, 1400);
+        }
+
+        function restartQuiz() {
+            currentQ = 0;
+            loadQuiz();
+        }
+
+        // Init
+        renderGallery();
+        loadQuiz();
+    </script>
+</body>
+</html>
